@@ -1,15 +1,15 @@
-import { findAll, findById, create, remove, update } from "../repositories/book.repository.js";
+import { bookRepository, type BookRepository } from "../repositories/book.repository.js";
 import type { Book } from "../types/book.js";
 
-export function getBooks(filters: Record<string, any>) {
-  return findAll(filters);
-}
+export const getBooks = async (filters: Record<string, any>, repo: BookRepository = bookRepository) => {
+  return await repo.findAll(filters);
+};
 
-export function getBook(id: number) {
-  return findById(id);
-}
+export const getBook = async (id: number, repo: BookRepository = bookRepository) => {
+  return await repo.findById(id);
+};
 
-export function createBook(book: Book) {
+export const createBook = async (book: Book, repo: BookRepository = bookRepository) => {
   if (typeof book.year !== "number" || book.year < 0) {
     return null; 
   }
@@ -23,16 +23,16 @@ export function createBook(book: Book) {
     ...book,
     id: Date.now(),
   };
-  return create(newBook);
+  return await repo.create(newBook);
 }
 
-export function deleteBook(id: number) {
-  return remove(id);
-}
+export const deleteBook = async (id: number, repo: BookRepository = bookRepository) => {
+  return await repo.remove(id);
+};
 
-export function updateBook(id: number, updatedBook: Book) {
+export const updateBook = async (id: number, updatedBook: Book, repo: BookRepository = bookRepository) => {
   if (updatedBook.title || updatedBook.author || updatedBook.year) {
-    return update(id, updatedBook); 
+    return await repo.update(id, updatedBook); 
   }
   return null;
 }

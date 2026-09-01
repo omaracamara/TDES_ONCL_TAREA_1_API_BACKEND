@@ -1,5 +1,12 @@
-import type { StdioNull } from "node:child_process";
 import type { Book } from "../types/book.js";
+
+export interface BookRepository {
+  findAll(filters: Record<string, any>): Promise<Book[]>;
+  findById(id: number): Promise<Book | null>;
+  create(book: Book): Promise<Book>;
+  remove(id: number): Promise<boolean>;
+  update(id: number, updatedBook: Book): Promise<Book | null>;
+}
 
 let books: Book[] = [
   {
@@ -16,9 +23,7 @@ let books: Book[] = [
   },
 ];
 
-// Repository es sololamente para trabajasr con datos 
-
-export const findAll = (filters: Record<string, any>): Book[] => {
+export const findAll = async (filters: Record<string, any>): Promise<Book[]> => {
   const activeKeys = Object.keys(filters).filter(
     (key) => filters[key] !== undefined && filters[key] !== ""
   );
@@ -45,22 +50,22 @@ export const findAll = (filters: Record<string, any>): Book[] => {
   });
 };
 
+export const findById = async (id: number): Promise<Book | null> => 
+  books.find((book) => book.id === id) || null;
 
-export const findById = (id: number) => books.find((book) => book.id === id);
-
-export const create = (book: Book) => {
+export const create = async (book: Book): Promise<Book> => {
   books.push(book);
   return book;
-}
+};
 
-export const remove = (id: number) => {
+export const remove = async (id: number): Promise<boolean> => {
   const exists = books.find((book) => book.id === id);
-  if(!exists) return false;
+  if (!exists) return false;
   books = books.filter((book) => book.id !== id);
   return true;
-}
+};
 
-export const update = (id: number, updatedBook: Book) => { 
+export const update = async (id: number, updatedBook: Book): Promise<Book | null> => { 
   const book = books.find((book) => book.id === id);
   if (!book) return null;
 
@@ -71,4 +76,12 @@ export const update = (id: number, updatedBook: Book) => {
   }
 
   return book;
-}
+};
+
+export const bookRepository: BookRepository = {
+  findAll,
+  findById,
+  create,
+  remove,
+  update,
+};
