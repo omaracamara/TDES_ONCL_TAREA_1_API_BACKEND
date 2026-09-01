@@ -31,5 +31,8 @@ export const update = (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const updatedBook = req.body;
   const updated = updateBook(id, updatedBook);
+  if (!updated) {
+    return res.status(400).json({ message: "Book could not be updated" });
+  }
   res.json(updated);
 };
