@@ -124,6 +124,15 @@ Content-Type: application/json
   "title": "Libro Inexistente"
 }
 
+### 7.3 PATCH /api/books/1
+PATCH {{baseUrl}}/1
+Content-Type: application/json
+
+{
+  "date": 2018
+}
+
+
 ###############################################################################
 # REQ-08 
 ###############################################################################
