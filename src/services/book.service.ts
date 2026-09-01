@@ -1,7 +1,7 @@
-import { findAll, findById, create, remove } from "../repositories/book.repository.js";
+import { findAll, findById, create, remove, update } from "../repositories/book.repository.js";
 import type { Book } from "../types/book.js";
 
-export function getBooks() {
+export function getBooks() { 
   return findAll();
 }
 
@@ -10,6 +10,18 @@ export function getBook(id: number) {
 }
 
 export function createBook(book: Book) {
+  if (!book.title || !book.author || !book.year) {
+    return null; 
+  }
+  if (typeof book.year !== "number" || book.year < 0) {
+    return null; 
+  }
+  if (typeof book.title !== "string" || typeof book.author !== "string") {
+    return null; 
+  }
+  if (book.title.trim() === "" || book.author.trim() === "") {
+    return null; 
+  }
   const newBook = {
     ...book,
     id: Date.now(),
@@ -19,4 +31,11 @@ export function createBook(book: Book) {
 
 export function deleteBook(id: number) {
   return remove(id);
+}
+
+export function updateBook(id: number, updatedBook: Book) {
+  if (updatedBook.title || updatedBook.author || updatedBook.year) {
+    return update(id, updatedBook); 
+  }
+  return null;
 }

@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import { getBooks, getBook,createBook,deleteBook } from "../services/book.service.js";
+import { getBooks, getBook,createBook,deleteBook, updateBook } from "../services/book.service.js";
 
-export function getAllBooks(req: Request, res: Response) {
+export function getAllBooks(req: Request, res: Response) { 
   res.json(getBooks());
 }
 
@@ -31,4 +31,14 @@ export const create = (req: Request, res: Response) => {
     return res.status(400).json({ message: "Book could not be created" });
   }
   res.status(201).json(newBook);
+};
+
+export const update = (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const updatedBook = req.body;
+  const updated = updateBook(id, updatedBook);
+  if (!updated) {
+    return res.status(404).json({ message: "Book not found or no valid fields to update" });
+  }
+  res.json(updated);
 };
