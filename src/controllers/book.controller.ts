@@ -9,18 +9,12 @@ export const getAllBooks = (req: Request, res: Response) => {
 export const getOne = (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const book = getBook(id);
-  if (!book) {
-    return res.status(404).json({ message: "Book not found" });
-  }
   res.json(book);
 };
 
 export const remove = (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const deleted = deleteBook(id); 
-  if (!deleted) {
-    return res.status(404).json({ message: "Book not found" });
-  }
   res.status(204).send();     
 };
 
@@ -37,8 +31,5 @@ export const update = (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const updatedBook = req.body;
   const updated = updateBook(id, updatedBook);
-  if (!updated) {
-    return res.status(404).json({ message: "Book not found or no valid fields to update" });
-  }
   res.json(updated);
 };

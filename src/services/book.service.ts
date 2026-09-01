@@ -10,9 +10,6 @@ export function getBook(id: number) {
 }
 
 export function createBook(book: Book) {
-  if (!book.title || !book.author || !book.year) {
-    return null; 
-  }
   if (typeof book.year !== "number" || book.year < 0) {
     return null; 
   }
