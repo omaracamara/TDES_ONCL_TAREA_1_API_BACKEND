@@ -18,9 +18,33 @@ let books: Book[] = [
 
 // Repository es sololamente para trabajasr con datos 
 
-export function findAll(): Book[] { 
-  return books;
-}
+export const findAll = (filters: Record<string, any>): Book[] => {
+  const activeKeys = Object.keys(filters).filter(
+    (key) => filters[key] !== undefined && filters[key] !== ""
+  );
+
+  if (activeKeys.length === 0) return books;
+
+  return books.filter((book) => {
+    return activeKeys.every((key) => {
+      if (!(key in book)) return true;
+
+      const bookValue = book[key as keyof Book];
+      const filterValue = filters[key];
+
+      if (typeof bookValue === "string") {
+        return bookValue.toLowerCase().includes(String(filterValue).toLowerCase());
+      }
+
+      if (typeof bookValue === "number") {
+        return bookValue === Number(filterValue);
+      }
+
+      return false;
+    });
+  });
+};
+
 
 export const findById = (id: number) => books.find((book) => book.id === id);
 

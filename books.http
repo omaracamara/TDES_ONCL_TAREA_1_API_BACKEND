@@ -2,32 +2,32 @@
 @baseUrl = http://localhost:3000/api/books
 
 ###############################################################################
-# REQ-02 · Listado de libros (GET /api/books)
+# REQ-02
 ###############################################################################
 
-### 2.1 GET /api/books (Caso Exitoso - Devuelve la lista con los 2 libros iniciales)
+### 2.1 GET /api/books 
 GET {{baseUrl}}
 Content-Type: application/json
 
 
 ###############################################################################
-# REQ-03 · Consulta individual (GET /api/books/:id)
+# REQ-03 
 ###############################################################################
 
-### 3.1 GET /api/books/1 (Caso Exitoso - Devuelve "Clean Code")
+### 3.1 GET /api/books/1 
 GET {{baseUrl}}/1
 Content-Type: application/json
 
-### 3.2 GET /api/books/999 (Recurso no existe - Devuelve 404 Not Found)
+### 3.2 GET /api/books/999 
 GET {{baseUrl}}/999
 Content-Type: application/json
 
 
 ###############################################################################
-# REQ-04 · Crear libros (POST /api/books)
+# REQ-04 · Crear libros 
 ###############################################################################
 
-### 4.1 POST /api/books (Caso Exitoso - Crea un nuevo libro y devuelve 201 Created)
+### 4.1 POST /api/books 
 POST {{baseUrl}}
 Content-Type: application/json
 
@@ -37,7 +37,7 @@ Content-Type: application/json
   "year": 2010
 }
 
-### 4.2 POST /api/books (Caso Exitoso - Crea otro libro y devuelve 201 Created)
+### 4.2 POST /api/books 
 POST {{baseUrl}}
 Content-Type: application/json
 
@@ -49,10 +49,10 @@ Content-Type: application/json
 
 
 ###############################################################################
-# REQ-05 · Validación de datos (POST /api/books)
+# REQ-05 
 ###############################################################################
 
-### 5.1 POST /api/books (Datos inválidos - Sin título -> 400 Bad Request)
+### 5.1 POST /api/books 
 POST {{baseUrl}}
 Content-Type: application/json
 
@@ -61,7 +61,7 @@ Content-Type: application/json
   "year": 2008
 }
 
-### 5.2 POST /api/books (Datos inválidos - Título solo con espacios -> 400 Bad Request)
+### 5.2 POST /api/books 
 POST {{baseUrl}}
 Content-Type: application/json
 
@@ -71,7 +71,7 @@ Content-Type: application/json
   "year": 2008
 }
 
-### 5.3 POST /api/books (Datos inválidos - Sin autor -> 400 Bad Request)
+### 5.3 POST /api/books 
 POST {{baseUrl}}
 Content-Type: application/json
 
@@ -80,7 +80,7 @@ Content-Type: application/json
   "year": 1999
 }
 
-### 5.4 POST /api/books (Datos inválidos - Año no numérico -> 400 Bad Request)
+### 5.4 POST /api/books 
 POST {{baseUrl}}
 Content-Type: application/json
 
@@ -92,23 +92,23 @@ Content-Type: application/json
 
 
 ###############################################################################
-# REQ-06 · Eliminar libros (DELETE /api/books/:id)
+# REQ-06
 ###############################################################################
 
-### 6.1 DELETE /api/books/2 (Caso Exitoso - Elimina "Design Patterns" -> 204 No Content o 200)
+### 6.1 DELETE /api/books/2 
 DELETE {{baseUrl}}/2
 Content-Type: application/json
 
-### 6.2 DELETE /api/books/2 (Recurso no existe / Ya eliminado -> 404 Not Found)
+### 6.2 DELETE /api/books/2 
 DELETE {{baseUrl}}/2
 Content-Type: application/json
 
 
 ###############################################################################
-# REQ-07 · Actualización parcial (PATCH /api/books/:id)
+# REQ-07 
 ###############################################################################
 
-### 7.1 PATCH /api/books/1 (Caso Exitoso - Modifica solo el año de "Clean Code")
+### 7.1 PATCH /api/books/1
 PATCH {{baseUrl}}/1
 Content-Type: application/json
 
@@ -116,7 +116,7 @@ Content-Type: application/json
   "year": 2018
 }
 
-### 7.2 PATCH /api/books/999 (Recurso no existe -> 404 Not Found)
+### 7.2 PATCH /api/books/999
 PATCH {{baseUrl}}/999
 Content-Type: application/json
 
@@ -125,15 +125,21 @@ Content-Type: application/json
 }
 
 ###############################################################################
-# REQ-08 · Búsqueda mediante query parameters (GET /api/books?author=...)
+# REQ-08 
 ###############################################################################
 
-### 8.1 GET /api/books?author=Robert (Caso Exitoso - Filtra y encuentra a Robert C. Martin)
-GET {{baseUrl}}?author=Robert
+### 8.1 GET /api/books?author=Robert
+GET {{baseUrl}}?author=Brandon
 Content-Type: application/json
 
-### 8.2 GET /api/books?author=Desconocido (Filtro sin coincidencias -> Devuelve array vacío [])
-GET {{baseUrl}}?author=Desconocido
+### 8.2 GET /api/books?year=2018
+GET {{baseUrl}}?year=2018
 Content-Type: application/json
 
+### 8.3 GET /api/books?author=Robert&year=2008
+GET {{baseUrl}}?author=Robert&year=2018 
+Content-Type: application/json
 
+### 8.4 GET /api/books?author=Dostoievski
+GET {{baseUrl}}?author=Dostoievski
+Content-Type: application/json

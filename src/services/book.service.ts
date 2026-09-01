@@ -1,8 +1,8 @@
 import { findAll, findById, create, remove, update } from "../repositories/book.repository.js";
 import type { Book } from "../types/book.js";
 
-export function getBooks() { 
-  return findAll();
+export function getBooks(filters: Record<string, any>) {
+  return findAll(filters);
 }
 
 export function getBook(id: number) {

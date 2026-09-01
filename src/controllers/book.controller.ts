@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
 import { getBooks, getBook,createBook,deleteBook, updateBook } from "../services/book.service.js";
 
-export function getAllBooks(req: Request, res: Response) { 
-  res.json(getBooks());
-}
+export const getAllBooks = (req: Request, res: Response) => {
+  res.json(getBooks(req.query));
+};
 
 // Todo lo relacionado con http request y response se hace en el controller, mientras que la logica de negocio se hace en el service
 export const getOne = (req: Request, res: Response) => {
